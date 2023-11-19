@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@reactivex/rxjs@6.3.3/dist/global/rxjs.umd.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <button>Click</button>
+
+    <script>
+
+    
+        const { of,  from, interval, range, generate, fromEvent, defer, bindCallback, bindNodeCallback } = rxjs;
+        const { take } = rxjs.operators;
+
+
+        // -------------------------
+        // of(1, true, 'string')
+        //     .subscribe(
+        //         v => console.log(v)
+        // )
+   
+
+
+        // -------------------------
+        // from(Promise.resolve(1))
+        //     .subscribe(
+        //         v => console.log(v)
+        // )
+   
+
+
+
+        // -------------------------
+
+
+        // //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction
+        // function* g(){
+        //     let i = 1;
+        //     while(true){
+        //         yield i++;
+        //     }
+        // }
+
+        
+        // // -------------------------
+
+        // from(g())
+        // .pipe(
+        //     take(10)
+        // )
+        //     .subscribe(
+        //         v => console.log('from g: ',v)
+        // )
+
+
+        // // -------------------------
+
+        // from(of(1,2,3,4))
+        // .pipe(
+        //     take(10)
+        // )
+        //     .subscribe(
+        //         v => console.log('from of: ',v)
+        // )
+
+
+        // // -------------------------
+
+        // interval(1000)
+        // .pipe(
+        //     take(10)
+        // )
+        //     .subscribe(
+        //         v => console.log('interval: ',v)
+        // )
+
+        // // -------------------------
+
+        // range(1000, 10)
+        // .pipe(
+        //     take(10)
+        // )
+        //     .subscribe(
+        //         v => console.log('range: ',v)
+        // )
+
+
+        //         // -------------------------
+
+        
+        // generate(0, x=> x < 10, x => x + 1)
+        // .pipe(
+        //     take(10)
+        // )
+        //     .subscribe(
+        //         v => console.log('generate: ',v)
+        // )
+
+
+        //         // -------------------------
+
+        // const button = document.querySelector('button');
+
+        // fromEvent(button, 'click')
+        // .subscribe(
+        //     v => console.log('fromEvent: ',v)
+        // )
+
+
+
+        // // -------------------------
+        // // retorna um observable quando é subscrito
+        // defer(() => {
+        //     return of(1)
+        // })
+        // .subscribe(
+        //     v => console.log('defer: ',v)
+        // )
+
+        // // -------------------------
+
+        // const a = (a) => defer(() => {
+        //     return a > 10 ? of(1) : of(2);
+        // })
+
+        // a(11)
+        // .subscribe(
+        //     v => console.log('defer: ',v)
+        // )
+
+
+        // -------------------------
+
+
+        // const a = (a, cb) => {
+        //     cb(a);
+        // }
+
+        // const button = document.querySelector('button');
+   
+        // bindCallback(a)(10)
+        // .subscribe(
+        //     v => console.log('bindCallback: ',v)
+        // )
+
+
+        // // -------------------------
+
+        
+        // const a = (a, cb) => {
+        //     // quando retorna erro 
+        //     //cb(new Error('asdas'),a);
+
+        //     // quando retorna sucesso priimeriio parametro é undefibned
+        //     cb(undefined,a);
+        // }
+
+        // const button = document.querySelector('button');
+   
+        // bindNodeCallback(a)(10)
+        // .subscribe(
+        //     v => console.log('bindCallback: ',v),
+        //     err => console.log('bindCallback: ',err)
+        // )
+
+        // // -------------------------
+
+
+
+    </script>
+    
+</body>
+</html>

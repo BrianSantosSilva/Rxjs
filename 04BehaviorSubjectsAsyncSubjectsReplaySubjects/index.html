@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@reactivex/rxjs@6.3.3/dist/global/rxjs.umd.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+
+
+        // const { BehaviorSubject, Observable } = rxjs;
+
+
+        // const sub = new BehaviorSubject(0);
+
+        // sub.next(1)
+        // sub.next(2)
+        // sub.next(3)
+        // sub.next(4)
+        
+        // const  subscription1 = sub.subscribe({
+        //     next: num => console.log('Observable 2', num),
+        //     error: err => console.log(err),
+        //     complete: () => console.log('completado')
+        // })
+
+        // setTimeout(() => {
+        //     subscription1.unsubscribe()
+        // }, 3000);
+
+
+
+        //----------------------
+
+
+        // const { BehaviorSubject, Observable } = rxjs;
+
+
+        // const sub = new BehaviorSubject(0);
+
+        // sub.next(1);
+        // sub.next(2);
+        // sub.next(3);
+        // sub.next(4);
+
+        // sub.subscribe({
+        //     next: num => console.log('Observable 1', num),
+        //     error: err => console.log(err),
+        //     complete: () => console.log('completado')
+        // })
+
+        // sub.next(5);
+        // sub.next(6);
+
+        // sub.subscribe({
+        //     next: num => console.log('Observable 2', num),
+        //     error: err => console.log(err),
+        //     complete: () => console.log('completado')
+        // })
+
+        // -----------------------
+
+
+
+        
+        // const { ReplaySubject, Observable } = rxjs;
+
+
+        // const sub = new ReplaySubject(4);
+
+        // sub.next(1);
+        // sub.next(2);
+        // sub.next(3);
+        // sub.next(4);
+
+        // sub.subscribe({
+        //     next: num => console.log('Observable 1', num),
+        //     error: err => console.log(err),
+        //     complete: () => console.log('completado')
+        // })
+
+        // sub.next(5);
+        // sub.next(6);
+
+        // sub.subscribe({
+        //     next: num => console.log('Observable 2', num),
+        //     error: err => console.log(err),
+        //     complete: () => console.log('completado')
+        // })
+
+        
+        // -----------------------
+        
+        // const { ReplaySubject, Observable } = rxjs;
+
+
+        // const sub = new ReplaySubject(4, 500);
+
+        // sub.next(1);
+        // sub.next(2);
+        // sub.next(3);
+        // sub.next(4);
+
+        // sub.subscribe({
+        //     next: num => console.log('Observable 1', num),
+        //     error: err => console.log(err),
+        //     complete: () => console.log('completado')
+        // })
+
+        // sub.next(5);
+        // sub.next(6);
+
+        // setTimeout(() => {
+        //     sub.subscribe({
+        //         next: num => console.log('Observable 2', num),
+        //         error: err => console.log(err),
+        //         complete: () => console.log('completado')
+        //     }) 
+        // }, 400);
+
+
+        // -----------------------
+
+
+        const { AsyncSubject, Observable } = rxjs;
+
+
+        const sub = new AsyncSubject();
+
+        sub.next(1);
+        sub.next(2);
+        sub.next(3);
+        sub.next(4);
+
+        sub.subscribe({
+            next: num => console.log('Observable 1', num),
+            error: err => console.log(err),
+            complete: () => console.log('completado')
+        })
+
+        sub.next(5);
+        sub.next(6);
+
+        setTimeout(() => {
+            sub.subscribe({
+                next: num => console.log('Observable 2', num),
+                error: err => console.log(err),
+                complete: () => console.log('completado')
+            }) 
+        }, 400);
+
+    
+        sub.complete()
+
+
+
+    </script>
+    
+</body>
+</html>

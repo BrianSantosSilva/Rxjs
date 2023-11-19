@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@reactivex/rxjs@6.3.3/dist/global/rxjs.umd.js"></script>
+    <title>Document</title>
+    <style>
+    
+
+        body {
+            background: linear-gradient(to left, #f49e34, #fecc8c 50%, #fecc8c 50%, #f49e34 100%);
+            color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content{
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input {
+            border-radius: 5px;
+            border: solid 2px #f8bb5e;
+            box-sizing: border-box;
+            box-shadow: #00000029 0 0 20px 1px;
+            height: 50px;
+            width: 300px;
+            overflow: auto;
+
+            background: #fcf5ea;
+        }
+
+
+        li {
+            padding: 16px;
+            
+        }
+
+        li:not(:last-of-type){
+            border-bottom: solid 2px #f7bb5e;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <input type="text" placeholder="Pais..." name="" id="">
+        <ul></ul>
+    </div>
+
+    <script>
+
+    
+        const { fromEvent,of, ajax: { ajax }} = rxjs;
+        const { take,catchError,startWith, distinctUntilChanged, debounceTime, pluck, takeUntil, switchMap, map, delay, filter, tap, skip } = rxjs.operators;
+
+
+        const input = fromEvent(document.querySelector("input"), 'input');
+
+        const ul = document.querySelector("ul")
+
+        const mostraResultado = res => {
+            ul.innerHTML = res.map(e => `<li>${e}</li>`).join('');
+        }
+
+
+        const buscaPaisesNaApi = termo => ajax(`https://restcountries.com/v3.1/name/${termo}?fields=name`).pipe(
+            pluck('response'),
+            map(resposta => 
+                resposta.map( e => e.name.common )
+            )
+        )
+
+        input.pipe(
+            debounceTime(500),
+            pluck('target', 'value'),
+            map(e => e.trim()),
+            distinctUntilChanged(),
+            switchMap(termo => {
+                if(!termo || termo.length < 3) return of([])
+                return buscaPaisesNaApi (termo)
+
+            }),
+            catchError((err, source) => {
+                console.error(err)
+                return source.pipe(
+                    startWith([])
+                );
+            })
+        ).subscribe(mostraResultado)
+
+
+    </script>
+    
+</body>
+</html>

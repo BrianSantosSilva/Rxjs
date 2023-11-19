@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@reactivex/rxjs@6.3.3/dist/global/rxjs.umd.js"></script>
+    <title>Document</title>
+    <style>
+   
+    </style>
+</head>
+<body>
+
+    
+
+    <script>
+
+    
+        const { of, ajax: { ajax } } = rxjs;
+        const { mergeMap, pluck, concatMap, switchMap, exhaustMap, combineAll } = rxjs.operators;
+
+
+        const api = (response, delay ) => ajax({
+            url: `http://127.0.0.1:5200/response/${JSON.stringify(response)}/delay/${delay}/`
+        });
+
+
+        const a = api({data: "A"}, 1000 );
+        const b = api({data: "B"}, 1000 );
+        const c = api({data: "C"}, 800 );
+        const d = api({data: "D"}, 1800 );
+        const e = api({data: "E"}, 1200 );
+        const f = api({data: "F"}, 1600 );
+        const g = api({data: "G"}, 2800 );
+        const h = api({data: "H"}, 700 );
+
+
+        // Executa em paralelo
+        // of(a,b,c,d,e,f,g,h)
+        // .pipe(
+        //     mergeMap(e => e),
+        //     pluck('response', 'data')
+        // )
+        // .subscribe(
+        //     x => console.log(x),
+        //     err => console.log(err),
+        //     _ => console.log("Complete")
+        // );
+
+
+        // Executa em um apos o outro
+        // of(a,b,c,d,e,f,g,h)
+        // .pipe(
+        //     concatMap(e => e),
+        //     pluck('response', 'data')
+        // )
+        // .subscribe(
+        //     x => console.log(x),
+        //     err => console.log(err),
+        //     _ => console.log("Complete")
+        // );
+
+         
+        // Executa o ultimo e vai cancelando as req anteriores
+        // of(a,b,c,d,e,f,g,h)
+        // .pipe(
+        //     switchMap(e => e),
+        //     pluck('response', 'data')
+        // )
+        // .subscribe(
+        //     x => console.log(x),
+        //     err => console.log(err),
+        //     _ => console.log("Complete")
+        // );
+
+
+        
+        // Executa a primeira e vai cancelando as req posteriores
+        // of(a,b,c,d,e,f,g,h)
+        // .pipe(
+        //     exhaustMap(e => e),
+        //     pluck('response', 'data')
+        // )
+        // .subscribe(
+        //     x => console.log(x),
+        //     err => console.log(err),
+        //     _ => console.log("Complete")
+        // );
+
+
+        // Executa em paralelo com liimite de paralelismo
+        // of(a,b,c,d,e,f,g,h)
+        // .pipe(
+        //     mergeMap(e => e, 4),
+        //     pluck('response', 'data')
+        // )
+        // .subscribe(
+        //     x => console.log(x),
+        //     err => console.log(err),
+        //     _ => console.log("Complete")
+        // );
+
+        
+        // Executa em paralelo combineAll juntando todos os resultados
+        of(a,b,c,d,e,f,g,h)
+        .pipe(
+            mergeMap(e => e),
+            pluck('response', 'data'),
+            combineAll()
+        )
+        .subscribe(
+            x => console.log(x),
+            err => console.log(err),
+            _ => console.log("Complete")
+        );
+
+    </script>
+    
+</body>
+</html>

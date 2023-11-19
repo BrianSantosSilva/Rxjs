@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@reactivex/rxjs@6.3.3/dist/global/rxjs.umd.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        const { Observable } = rxjs;
+        const { share } = rxjs.operators;
+
+
+        // // INICIO Único valor VS Múltiplos valores
+        // Promise.resolve((resolve) => {
+        //     resolve(1)
+        //     resolve(2)
+        // }).then(num => console.log('Promisse', 1))
+
+
+        // Observable.create((observer) => {
+        //     observer.next(1);
+        //     observer.next(2);
+        // }).subscribe(num => console.log('Obsevable', num))
+        // // FIM Único valor VS Múltiplos valores
+
+
+        // // INICIO Execussão imediata(Eager) VS Execussão sob demanda(Lazy)
+
+        // new Promise((resolve) => {
+        //     console.log('Iniciando a promisse')
+        //     resolve(1)
+        //     resolve(2)
+        // })
+        // //.then(num => console.log('Promisse', 1))
+
+        // const observer  = Observable.create((observer) => {
+        //     console.log('Iniciando o observable')
+        //     observer.next(1);
+        //     observer.next(2);
+        // })
+
+        // setTimeout(() => {
+        //     observer.subscribe((num) => console.log('Observable', num));
+        // }, 1000);
+        // //.subscribe(num => console.log('Obsevable', num))
+        // // FIM Execussão imediata(Eager) VS Execussão sob demanda(Lazy)
+
+
+
+
+        // // INICIO Compartilhada(multicast) VS Compartilhada ou não(multicast/unicast)
+        // const promisse = new Promise((resolve) => {
+        //     console.log('Iniciando a promisse')
+        //     setTimeout(()=> resolve(1), 3000)
+        // })
+
+        // const observer  = Observable.create((observer) => {
+        //     console.log('Iniciando o observable')
+        //     setTimeout(()=> observer.next(1), 3000)
+        // })
+
+
+        // promisse.then(num => console.log('Promisse', 1))
+        // observer.subscribe((num) => console.log('Observable', num));
+
+        // setTimeout(() => {
+        //     promisse.then(num => console.log('Promisse', 1))
+        //     observer.subscribe((num) => console.log('Observable', num));
+        // }, 2000);
+        // //.subscribe(num => console.log('Obsevable', num))
+        // // FIM Compartilhada(multicast) VS Compartilhada ou não(multicast/unicast)
+
+
+        // // INICIO Compartilhada(multicast) VS Compartilhada (multicast/unicast)
+        // const promisse = new Promise((resolve) => {
+        //     console.log('Iniciando a promisse')
+        //     setTimeout(()=> resolve(1), 3000)
+        // })
+
+        // const observer  = Observable.create((observer) => {
+        //     console.log('Iniciando o observable')
+        //     setTimeout(()=> observer.next(1), 3000)
+        // }).pipe(
+        //     share()
+        // );
+
+
+        // promisse.then(num => console.log('Promisse', 1))
+        // observer.subscribe((num) => console.log('Observable', num));
+
+        // setTimeout(() => {
+        //     promisse.then(num => console.log('Promisse', 1))
+        //     observer.subscribe((num) => console.log('Observable', num));
+        // }, 2000);
+        // //.subscribe(num => console.log('Obsevable', num))
+        // // FIM Compartilhada(multicast) VS Compartilhada(multicast/unicast)
+
+
+
+        // // INICIO assíncrona VS syncrona ou assíncrona
+        // const promisse = new Promise((resolve) => {
+        //     resolve(1)
+        // })
+
+        // const observer  = Observable.create((observer) => {
+        //     observer.next(1)
+        //     setTimeout(()=> observer.next(2), 1500)
+        // })
+
+        // promisse.then(num => console.log('Promisse', 1))
+        // observer.subscribe((num) => console.log('Observable', num));
+
+        // // FIM assíncrona VS syncrona ou assíncrona
+
+        
+
+        // // INICIO cancelavel VS não cancelavel
+        // const promisse = new Promise((resolve) => {
+        //     resolve(1)
+        // })
+
+        // const observer  = Observable.create((observer) => {
+        //     let i = 0;
+        //     const interval  = setInterval(()=> 
+        //     {
+        //         console.log('aki', i)
+        //         observer.next(i++)
+        //     }, 1000)
+
+        //     // atencão aqui para não gerar memory leak, precisa desse retorno no caso;
+        //     return () => clearInterval(interval)
+        // })
+
+        // promisse.then(num => console.log('Promisse', 1))
+        // const subscriber = observer.subscribe((num) => console.log('Observable', num));
+
+        // setTimeout(() => { subscriber.unsubscribe()} ,5000);
+        // // FIM cancelavel VS não cancelavel
+
+
+    </script>
+    
+</body>
+</html>

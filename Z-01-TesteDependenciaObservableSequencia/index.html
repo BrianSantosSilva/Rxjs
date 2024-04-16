@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@reactivex/rxjs@6.3.3/dist/global/rxjs.umd.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        const { of, throwError, ajax: { ajax } } = rxjs;
+        const { mergeMap, pluck, concatMap, startWith, switchMap, catchError, delay, exhaustMap, combineAll, map } = rxjs.operators;
+
+
+        const request1$ = busca01().pipe(
+            map(retorno => {
+                console.log("---map1")
+                console.log(retorno)
+                console.log("---map1")
+
+                return retorno;
+            }),
+            catchError(err => {
+                alert('ERRO1')
+                console.log(err)
+
+                return throwError(err);
+            })
+        );
+
+        const request2$ = busca02().pipe(
+            map(retorno => {
+                console.log("---map2")
+                console.log(retorno)
+                console.log("---map2")
+
+                return retorno;
+            }),
+            catchError(err => {
+                alert('ERRO2')
+
+                return throwError(err);
+            })
+        );
+
+        const request3$ = busca03().pipe(
+            map(retorno => {
+                console.log("---map3")
+                console.log(retorno)
+                console.log("---map3")
+
+                return retorno;
+            }),
+            catchError(err => {
+                alert('ERRO3')
+
+                return throwError(err);
+            })
+        );
+
+
+        //VERSAO REDUZIDA 
+        // request1$
+        //     .pipe(
+        //         concatMap(res1 => request2$),
+        //         concatMap(res2 => request3$),
+        //     )
+        //     .subscribe();
+
+        // VERSAO BUROCRATICA
+        request1$
+            .pipe(
+                concatMap(res1 => {
+                    console.log("---111")
+                    console.log(res1)
+                    console.log("---111")
+                    return request2$;
+                }),
+                concatMap(res2 => {
+                    console.log("---222")
+                    console.log(res2)
+                    console.log("---222")
+                    return request3$;
+                }),
+            )
+            .subscribe(res3 => {
+                console.log("----333")
+                console.log(res3)
+                console.log("----333")
+            },
+            (eee) => {
+                console.log("-Só é usavel se for tratamento generico de erro.-")
+                console.log(eee)
+                console.log("--")
+            }
+        );
+
+        function busca01() {
+            return of('RESPOSTA1').pipe(delay(2000));
+            //return throwError({data:"ERRO RESPOSTA1"})
+        }
+        function busca02() {
+            return of('RESPOSTA2').pipe(delay(100));
+            //return throwError({data:"ERRO RESPOSTA2"})
+        }
+
+        function busca03() {
+            return of('RESPOSTA3').pipe(delay(100));
+            //return throwError({ data: "ERRO RESPOSTA2" })
+        }
+    </script>
+
+</body>
+
+</html>
